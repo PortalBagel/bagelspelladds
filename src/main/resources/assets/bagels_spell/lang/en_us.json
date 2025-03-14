@@ -1,0 +1,15 @@
+{
+  "spell.irons_example_mod.super_heal": "Super Heal",
+  "spell.irons_example_mod.super_heal.guide": "Cast to heal yourself.",
+
+  "ui.irons_example_mod.healing": "%d Healing",
+
+  "spell.bagels_spell.nuke": "Nuke",
+  "spell.bagels_spell.nuke.guide": "Cast to become Death, destroyer of worlds.",
+
+  "ui.irons_example_mod.radius": "%d Radius",
+
+  "item.irons_example_mod.example_magic_sword": "Example Magic Sword",
+
+  "item.bagels_spell.sword_dustless": "Dustless"
+}
