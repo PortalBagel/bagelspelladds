@@ -4,7 +4,7 @@ import io.redspace.bagels_spell.BagelsSpell;
 import io.redspace.bagels_spell.items.ExampleMagicSword;
 import io.redspace.bagels_spell.items.SwordDustless;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
-import io.redspace.ironsspellbooks.spells.holy.HealSpell;
+import io.redspace.ironsspellbooks.spells.holy.DivineSmiteSpell;
 import io.redspace.ironsspellbooks.api.registry.SpellDataRegistryHolder;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,5 +20,5 @@ public class ItemRegistry {
     }
 
     public static final RegistryObject<Item> EXAMPLE_MAGIC_SWORD = ITEMS.register("example_magic_sword", () -> new ExampleMagicSword(new SpellDataRegistryHolder[]{new SpellDataRegistryHolder(ExampleSpellRegistry.NUKE_SPELL, 1)}));
-    //public static final RegistryObject<Item> SWORD_DUSTLESS = ITEMS.register("Dustless", () -> new SwordDustless(new SpellDataRegistryHolder[]{new SpellDataRegistryHolder(SpellRegistry.DIVINE_SMITE_SPELL, 10)}));
+    public static final RegistryObject<Item> SWORD_DUSTLESS = ITEMS.register("sword_dustless", () -> new SwordDustless(new SpellDataRegistryHolder[]{new SpellDataRegistryHolder(ExampleSpellRegistry.FLOWER_STEP_SPELL, 3)}));
 }

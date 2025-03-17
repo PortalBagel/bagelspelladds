@@ -1,9 +1,11 @@
 package io.redspace.bagels_spell;
 
 import com.mojang.logging.LogUtils;
+import io.redspace.bagels_spell.registry.ExampleMobEffectRegistry;
 import io.redspace.bagels_spell.registry.ItemRegistry;
 import io.redspace.bagels_spell.registry.ExampleSpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
+import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.spells.fire.BlazeStormSpell;
 import io.redspace.ironsspellbooks.spells.holy.HealSpell;
 import net.minecraft.client.particle.HeartParticle;
@@ -24,6 +26,8 @@ import org.slf4j.Logger;
 public  class BagelsSpell{
     public static final String MODID = "bagels_spell";
     public static final Logger LOGGER = LogUtils.getLogger();
+    public static MagicManager MAGIC_MANAGER;
+
 
     public BagelsSpell() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -31,6 +35,8 @@ public  class BagelsSpell{
         ExampleSpellRegistry.register(modEventBus);
         ItemRegistry.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
+        //ExampleMobEffectRegistry.MOB_EFFECT_DEFERRED_REGISTER.register(modEventBus);
+        ExampleMobEffectRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

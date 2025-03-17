@@ -78,6 +78,12 @@ repositories {
     maven { url = "https://cursemaven.com" }
     maven { url = "https://maven.blamejared.com" }
     maven { url = "https://maven.kosmx.dev/" }
+
+
+    //maven { url = "https://api.modrinth.com/maven" }
+    //maven { url = "https://maven.shedaniel.me/" }
+    //maven { url = "https://maven.architectury.dev/" }
+
 }
 
 //This is helpful if you are using ISS SNAPSHOT releases.  You can comment it out if you are using an actual version
@@ -132,8 +138,10 @@ dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
 
     // BETTER COMBAT **********************************************************************************************
-    //runtimeOnly fg.deobf("curse.maven:better-combat-by-daedelus-${better_combat_version}")
-    //runtimeOnly fg.deobf("curse.maven:cloth-config-348521:4633416")
+    //implementation fg.deobf('maven.modrinth:better-combat:1.8.6-forge')
+
+    //api fg.deobf("me.shedaniel.cloth:cloth-config-forge:11.1.136")
+    //api fg.deobf("dev.architectury:architectury-forge:11.0.5")
 
     // PATCHOULI **************************************************************************************************
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")

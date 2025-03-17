@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "irons_example_mod:item/example_magic_sword"
+    "layer0": "bagels_spell:item/example_magic_sword"
   }
 }
