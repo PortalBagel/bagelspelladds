@@ -13,11 +13,15 @@ import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.AnimationHolder;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
+//import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
+import io.redspace.ironsspellbooks.entity.spells.target_area.TargetedAreaEntity;
+
 import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.ParticleUtils;
 import net.minecraft.world.InteractionHand;
@@ -159,37 +163,39 @@ public class FlowerDomainSpell extends AbstractSpell {
 
             spawnParticles(level, ParticleTypes.CHERRY_LEAVES, x, y, z, 1, deltaX, deltaY, deltaZ, speed, true);
 
-            AoeEntity aoeEntity = new AoeEntity() {
-                @Override
-                public void applyEffect(LivingEntity target) {
+/*
+            Vec3 spawn = null;
+            if (playerMagicData.getAdditionalCastData() instanceof TargetEntityCastData castTargetingData) {
 
-                }
+                var target = castTargetingData.getTarget((ServerLevel) level);
+                if (target != null)
+                    spawn = target.position();
 
-                @Override
-                public float getParticleCount() {
-                    return 0;
+                if (spawn == null) {
+                    spawn = Utils.raycastForEntity(level, entity, 32, true, .15f).getLocation();
+                    spawn = Utils.moveToRelativeGroundLevel(level, spawn, 6);
                 }
+            }
 
-                @Override
-                public Optional<ParticleOptions> getParticle() {
-                    return Optional.empty();
-                }
-            };
+
+
+            AoeEntity aoeEntity = new AoeEntity(level);
+
+
             aoeEntity.setOwner(entity);
             aoeEntity.setCircular();
-            aoeEntity.setRadius(radius);
-            aoeEntity.setDuration(duration);
-            aoeEntity.setDamage(getHealing(spellLevel, entity));
+            aoeEntity.setRadius((float)radius);
+            aoeEntity.setDuration(2);
+            aoeEntity.setDamage(getDamage(spellLevel, entity));//or getHealing
             aoeEntity.setPos(spawn);
-            world.addFreshEntity(aoeEntity);
+            level.addFreshEntity(aoeEntity);
 
-            TargetedAreaEntity visualEntity = TargetedAreaEntity.createTargetAreaEntity(world, spawn, radius, 0xc80000);
-            visualEntity.setDuration(duration);
-            visualEntity.setOwner(aoeEntity);
-            visualEntity.setShouldFade(true);
 
+*/
 
         }
+
+
     }
 
 
