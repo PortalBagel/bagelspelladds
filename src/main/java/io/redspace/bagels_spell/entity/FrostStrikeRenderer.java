@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.PoseStack.Pose;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import io.redspace.bagels_spell.BagelsSpell;
 import io.redspace.ironsspellbooks.IronsSpellbooks;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,10 +21,10 @@ import java.util.Random;
 
 public class FrostStrikeRenderer extends EntityRenderer<FrostStrike> {
     private static final ResourceLocation[] TEXTURES = {
-            IronsSpellbooks.id("textures/entity/frost_strike_1.png"),
-            IronsSpellbooks.id("textures/entity/frost_strike_2.png"),
-            IronsSpellbooks.id("textures/entity/frost_strike_3.png"),
-            IronsSpellbooks.id("textures/entity/frost_strike_4.png")
+            BagelsSpell.id("textures/entity/froststrike/frost_strike_1.png"),
+            BagelsSpell.id("textures/entity/froststrike/frost_strike_2.png"),
+            BagelsSpell.id("textures/entity/froststrike/frost_strike_3.png"),
+            BagelsSpell.id("textures/entity/froststrike/frost_strike_4.png")
     };
 
     public FrostStrikeRenderer(Context context) {

@@ -4,12 +4,14 @@ import com.mojang.logging.LogUtils;
 import io.redspace.bagels_spell.registry.ExampleMobEffectRegistry;
 import io.redspace.bagels_spell.registry.ItemRegistry;
 import io.redspace.bagels_spell.registry.ExampleSpellRegistry;
+import io.redspace.ironsspellbooks.IronsSpellbooks;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.spells.fire.BlazeStormSpell;
 import io.redspace.ironsspellbooks.spells.holy.HealSpell;
 import net.minecraft.client.particle.HeartParticle;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -19,6 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -52,5 +55,9 @@ public  class BagelsSpell{
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
         }
+    }
+
+    public static ResourceLocation id(@NotNull String path) {
+        return new ResourceLocation(BagelsSpell.MODID, path);
     }
 }
