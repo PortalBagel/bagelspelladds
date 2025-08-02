@@ -1,18 +1,32 @@
 package io.redspace.bagels_spell.spells;
 
-import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.server.entity.ACEntityRegistry;
-import com.github.alexmodguy.alexscaves.server.entity.item.NuclearBombEntity;
-import com.github.alexmodguy.alexscaves.server.entity.item.NuclearExplosionEntity;
+import io.redspace.bagels_spell.entity.HealingAoe;
+import io.redspace.bagels_spell.registry.PbSchoolRegistry;
+import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
+import io.redspace.ironsspellbooks.damage.DamageSources;
+import io.redspace.ironsspellbooks.network.spell.ClientboundAborptionParticles;
+import io.redspace.ironsspellbooks.network.spell.ClientboundFortifyAreaParticles;
+import io.redspace.ironsspellbooks.network.spell.ClientboundParticleShockwave;
+import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
+import io.redspace.ironsspellbooks.registries.ParticleRegistry;
+import io.redspace.ironsspellbooks.setup.Messages;
+import io.redspace.ironsspellbooks.spells.TargetAreaCastData;
+import io.redspace.ironsspellbooks.util.ParticleHelper;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
+
 import io.redspace.bagels_spell.BagelsSpell;
-import io.redspace.bagels_spell.entity.AoeEntity;
+
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.AnimationHolder;
 import io.redspace.ironsspellbooks.api.util.Utils;
-import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
+
 import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
 import io.redspace.ironsspellbooks.entity.spells.target_area.TargetedAreaEntity;
 
@@ -34,6 +48,7 @@ import net.minecraft.client.particle.CherryParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -53,19 +68,21 @@ public class FlowerDomainSpell extends AbstractSpell {
     }
 
     public FlowerDomainSpell() {
-        this.manaCostPerLevel = 100;
+        this.manaCostPerLevel = 50;
         this.baseSpellPower = 6;
         this.spellPowerPerLevel = 1;
         this.castTime = 20;
-        this.baseManaCost = 500;
+        this.baseManaCost = 100;
         //hi
     }
 
+    double radius = 12.0;
+
     private final DefaultConfig defaultConfig = new DefaultConfig()
             .setMinRarity(SpellRarity.LEGENDARY)
-            .setSchoolResource(SchoolRegistry.NATURE_RESOURCE)
+            .setSchoolResource(PbSchoolRegistry.BLOSSOM_RESOURCE)
             .setMaxLevel(1)
-            .setCooldownSeconds(600)
+            .setCooldownSeconds(120)
             .build();
 
 
@@ -94,13 +111,29 @@ public class FlowerDomainSpell extends AbstractSpell {
         return Optional.empty();
     }
 
+    @Override
+    public boolean checkPreCastConditions(Level level, int spellLevel, LivingEntity entity, MagicData playerMagicData) {
+        //return entity.isHolding(ItemStack::isDamageableItem); // make sure the player is holding a tool
+        return entity.isHolding(stack -> stack.is(Tags.Items.TOOLS));
 
+    }
+
+
+    public void onServerPreCast(Level level, int spellLevel, LivingEntity entity, @Nullable MagicData playerMagicData) {
+        super.onServerPreCast(level, spellLevel, entity, playerMagicData);
+        if (playerMagicData == null)
+            return;
+        TargetedAreaEntity targetedAreaEntity = TargetedAreaEntity.createTargetAreaEntity(level, entity.position(), (float) radius, 16777215, entity);
+        playerMagicData.setAdditionalCastData(new TargetAreaCastData(entity.position(), targetedAreaEntity));
+    }
     @Override
     public void onClientPreCast(Level level, int spellLevel, LivingEntity entity, InteractionHand hand, @Nullable MagicData playerMagicData) {
         super.onClientPreCast(level, spellLevel, entity, hand, playerMagicData);
 
+
+
         Vec3 forward = entity.getForward().normalize(); // Forward direction
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 20; i++) {
 
             Vec3 randomOffset = new Vec3((Utils.random.nextDouble() - 0.5) * 0.8,
                     (Utils.random.nextDouble() - 0.5) * 0.8,
@@ -120,27 +153,30 @@ public class FlowerDomainSpell extends AbstractSpell {
 
     @Override
     public AnimationHolder getCastStartAnimation() {
-        return SpellAnimations.CHARGE_ANIMATION;
+        return SpellAnimations.PREPARE_CROSS_ARMS;
     }
 
     @Override
     public AnimationHolder getCastFinishAnimation() {
-        return SpellAnimations.FINISH_ANIMATION;
+        return SpellAnimations.ONE_HANDED_HORIZONTAL_SWING_ANIMATION;
+    }
+
+    private float getDamage(int spellLevel, LivingEntity caster) {
+        return getSpellPower(spellLevel, caster) * .5f;
     }
 
 
     @Override
-    public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
-
-        super.onCast(level, spellLevel, entity, castSource, playerMagicData);
+    public void onCast(Level world, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
+        super.onCast(world, spellLevel, entity, castSource, playerMagicData);
 
         double centerX = entity.getX();
         double centerY = entity.getY();
         double centerZ = entity.getZ();
 
-        int particleCount = 250; // Total number of particles
-        double radius = 5.0; // Base radius of the swirl
-        double height = 4.0; // Height of the swirl
+        int particleCount = 500;
+
+        double height = 4.0;
         double speed = 0.1;
         double randomnessFactor = 2;
 
@@ -148,55 +184,101 @@ public class FlowerDomainSpell extends AbstractSpell {
             double randomOffset = (Utils.random.nextDouble() - 0.5) * randomnessFactor;
 
             double adjustedRadius = radius + randomOffset;
+            double angle = (i / (double) particleCount) * Math.PI * 4 + randomOffset;
 
-            double angle = (i / (double) particleCount) * Math.PI * 4 + randomOffset; // Adjust angle to spread particles
-
-            double x = centerX + Math.cos(angle) * adjustedRadius; // Swirl horizontally (X)
-            double z = centerZ + Math.sin(angle) * adjustedRadius; // Swirl horizontally (Z)
-
+            double x = centerX + Math.cos(angle) * adjustedRadius;
+            double z = centerZ + Math.sin(angle) * adjustedRadius;
             double y = centerY + (double) i / particleCount * height + randomOffset;
 
-            double deltaX = (Utils.random.nextDouble() - 0.5) * 0.1; // Slight random motion
+            double deltaX = (Utils.random.nextDouble() - 0.5) * 0.1;
             double deltaY = (Utils.random.nextDouble() - 0.5) * 0.1;
             double deltaZ = (Utils.random.nextDouble() - 0.5) * 0.1;
 
-
-            spawnParticles(level, ParticleTypes.CHERRY_LEAVES, x, y, z, 1, deltaX, deltaY, deltaZ, speed, true);
-
-/*
-            Vec3 spawn = null;
-            if (playerMagicData.getAdditionalCastData() instanceof TargetEntityCastData castTargetingData) {
-
-                var target = castTargetingData.getTarget((ServerLevel) level);
-                if (target != null)
-                    spawn = target.position();
-
-                if (spawn == null) {
-                    spawn = Utils.raycastForEntity(level, entity, 32, true, .15f).getLocation();
-                    spawn = Utils.moveToRelativeGroundLevel(level, spawn, 6);
-                }
-            }
-
-
-
-            AoeEntity aoeEntity = new AoeEntity(level);
-
-
-            aoeEntity.setOwner(entity);
-            aoeEntity.setCircular();
-            aoeEntity.setRadius((float)radius);
-            aoeEntity.setDuration(2);
-            aoeEntity.setDamage(getDamage(spellLevel, entity));//or getHealing
-            aoeEntity.setPos(spawn);
-            level.addFreshEntity(aoeEntity);
-
-
-*/
-
+            spawnParticles(world, ParticleTypes.CHERRY_LEAVES, x, y, z, 1, deltaX, deltaY, deltaZ, speed, true);
         }
+
+        //Second swirl
+        double tallHeight = height * 2;
+
+        for (int i = 0; i < particleCount*4; i++) {
+            double randomOffset = (Utils.random.nextDouble() - 0.5) * 4 *randomnessFactor;
+
+            double adjustedRadius = radius + randomOffset;
+            double angle = -((i / (double) particleCount) * Math.PI * 4 + randomOffset); // reversed angle
+
+            double x = centerX + Math.cos(angle) * adjustedRadius;
+            double z = centerZ + Math.sin(angle) * adjustedRadius;
+            double y = centerY + (double) i / particleCount * tallHeight + randomOffset;
+
+            double deltaX = (Utils.random.nextDouble() - 0.5) * 0.1;
+            double deltaY = (Utils.random.nextDouble() - 0.5) * 0.1;
+            double deltaZ = (Utils.random.nextDouble() - 0.5) * 0.1;
+
+            spawnParticles(world, ParticleTypes.CHERRY_LEAVES, x, y, z, 1, deltaX, deltaY, deltaZ, speed, true);
+        }
+
+        for (int i = 0; i < particleCount; i++) {
+            double randomOffset = (Utils.random.nextDouble() - 0.5) * randomnessFactor;
+
+            double adjustedRadius = radius + randomOffset;
+            double angle = -((i / (double) particleCount) * Math.PI * 4 + randomOffset);
+
+            double x = centerX + Math.cos(angle) * adjustedRadius;
+            double z = centerZ + Math.sin(angle) * adjustedRadius;
+            double y = centerY + (double) i / particleCount * height + randomOffset;
+
+            double deltaX = (Utils.random.nextDouble() - 0.5) * 0.1;
+            double deltaY = (Utils.random.nextDouble() - 0.5) * 0.1;
+            double deltaZ = (Utils.random.nextDouble() - 0.5) * 0.1;
+
+            spawnParticles(world, ParticleTypes.CHERRY_LEAVES, x, y, z, 1, deltaX, deltaY, deltaZ, speed, true);
+        }
+
+        for (int i = 0; i < particleCount * 4; i++) {
+            double randomOffset = (Utils.random.nextDouble() - 0.5) * 4 * randomnessFactor;
+
+            double adjustedRadius = radius + randomOffset;
+            double angle = ((i / (double) particleCount) * Math.PI * 4 + randomOffset);
+
+            double x = centerX + Math.cos(angle) * adjustedRadius;
+            double z = centerZ + Math.sin(angle) * adjustedRadius;
+            double y = centerY + (double) i / particleCount * tallHeight + randomOffset;
+
+            double deltaX = (Utils.random.nextDouble() - 0.5) * 0.1;
+            double deltaY = (Utils.random.nextDouble() - 0.5) * 0.1;
+            double deltaZ = (Utils.random.nextDouble() - 0.5) * 0.1;
+
+            spawnParticles(world, ParticleTypes.CHERRY_LEAVES, x, y, z, 1, deltaX, deltaY, deltaZ, speed, true);
+        }
+
+        world.getEntitiesOfClass(LivingEntity.class,
+                        new AABB(entity.position().subtract(radius, radius, radius), entity.position().add(radius, radius, radius)))
+                .forEach((target) -> {
+                    double distance = entity.distanceTo(target);
+
+                    if (distance <= radius) {
+                        // Allies → Give Strength
+                        if (Utils.shouldHealEntity(entity, target)) {
+                            target.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20 * 120, (int) 1, false, false, true));
+                            Messages.sendToPlayersTrackingEntity(new ClientboundAborptionParticles(target.position()), entity, true);
+                        }
+                        // Non-players → Give Weakness
+                        else if (!(target instanceof Player)) {
+                            target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 120, 1));
+                        }
+                    }
+                });
+
+
+        //Messages.sendToPlayersTrackingEntity(new ClientboundFortifyAreaParticles(entity.position()), entity, true);
+
+
+        super.onCast(world, spellLevel, entity, castSource, playerMagicData);
+
 
 
     }
+
 
 
 

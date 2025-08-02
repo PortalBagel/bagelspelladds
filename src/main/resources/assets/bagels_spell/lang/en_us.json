@@ -11,5 +11,30 @@
 
   "item.irons_example_mod.example_magic_sword": "Example Magic Sword",
 
-  "item.bagels_spell.sword_dustless": "Dustless"
+  "item.bagels_spell.sword_dustless": "Dustless",
+
+
+
+
+  "spell.bagels_spell.flower_domain": "Plum Blossom Sword Form: Beautiful Day",
+  "spell.bagels_spell.flower_domain.guide": "Summon a domain of cherry blossoms, applying weakness and reducing armors of other entities.",
+
+  "spell.bagels_spell.flower_step": "Plum Blossom Sword Form: Flower Step",
+  "spell.bagels_spell.flower_step.guide": "Teleport forward, leaving behind falling cherry blossoms.",
+
+  "spell.bagels_spell.flower_slash": "Plum Blossom Sword Form: Successive Flower Slash",
+  "spell.bagels_spell.flower_slash.guide": "Swing your sword in succession, leaving a trail of cherry blossoms.",
+
+  "spell.bagels_spell.flower_surround": "Plum Blossom Sword Form: Petal Dance",
+  "spell.bagels_spell.flower_surround.guide": "A defensive-offensive stance releasing burst slashes around the user.",
+
+  "spell.bagels_spell.thousand_blossom": "Plum Blossom Sword Form: Scattering Blossom Strike",
+  "spell.bagels_spell.thousand_blossom.guide": "Scatter a storm of razor sharp petals, dealing damage.",
+
+
+
+
+
+  "spell.bagels_spell.six_word_mantra": "Six Word Mantra",
+  "spell.bagels_spell.six_word_mantra.guide": "Chant a mantra, with each extra recast granting a stronger buff."
 }

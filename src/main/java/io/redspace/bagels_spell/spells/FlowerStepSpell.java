@@ -1,6 +1,7 @@
 package io.redspace.bagels_spell.spells;
 
 import io.redspace.bagels_spell.BagelsSpell;
+import io.redspace.bagels_spell.registry.PbSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
@@ -21,6 +22,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -37,7 +39,9 @@ public class FlowerStepSpell extends AbstractSpell {
 
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
-        return List.of(Component.translatable("ui.irons_spellbooks.distance", Utils.stringTruncation(getDistance(spellLevel, caster), 1)));
+        return List.of(
+               // Component.translatable("ui.irons_spellbooks.distance", Utils.stringTruncation(getDistance(spellLevel, caster), 1))
+        );
     }
 
     public FlowerStepSpell() {
@@ -54,8 +58,8 @@ public class FlowerStepSpell extends AbstractSpell {
     }
 
     private final DefaultConfig defaultConfig = new DefaultConfig()
-            .setMinRarity(SpellRarity.LEGENDARY)
-            .setSchoolResource(SchoolRegistry.NATURE_RESOURCE)
+            .setMinRarity(SpellRarity.UNCOMMON)
+            .setSchoolResource(PbSchoolRegistry.BLOSSOM_RESOURCE)
             .setMaxLevel(5)
             .setCooldownSeconds(5)
             .build();
@@ -84,6 +88,7 @@ public class FlowerStepSpell extends AbstractSpell {
     public void onClientPreCast(Level level, int spellLevel, LivingEntity entity, InteractionHand hand, @Nullable MagicData playerMagicData) {
         super.onClientPreCast(level, spellLevel, entity, hand, playerMagicData);
 
+
         Vec3 forward = entity.getForward().normalize(); // Forward direction
         for (int i = 0; i < 70; i++) {
 
@@ -103,6 +108,26 @@ public class FlowerStepSpell extends AbstractSpell {
     }
 
     @Override
+    /*public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
+        // Apply AIRBORNE effect
+        entity.addEffect(new MobEffectInstance(MobEffectRegistry.AIRBORNE.get(), 10, 0, false, false, false));
+
+        double launchForce = 1.5 + 0.5 * spellLevel; // scale launch with spell level
+        Vec3 direction = entity.getLookAngle().normalize().scale(launchForce);
+        entity.setDeltaMovement(direction);
+        entity.hurtMarked = true;
+
+        entity.resetFallDistance();
+        level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), getCastFinishSound().get(), SoundSource.NEUTRAL, 1f, 1f);
+
+        // Apply Oakskin
+        entity.addEffect(new MobEffectInstance(MobEffectRegistry.OAKSKIN.get(), 100, 0, true, false, false));
+
+        // Apply Slow Falling for 10 seconds (200 ticks)
+        entity.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 200, 0, true, false, false));
+
+        super.onCast(level, spellLevel, entity, castSource, playerMagicData);
+    }*/
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         Vec3 dest = null;
         var teleportData = (TeleportSpell.TeleportData) playerMagicData.getAdditionalCastData();
@@ -146,6 +171,8 @@ public class FlowerStepSpell extends AbstractSpell {
 
     private float getDistance(int spellLevel, LivingEntity sourceEntity) {
         return (float) (Utils.softCapFormula(getEntityPowerMultiplier(sourceEntity)) * getSpellPower(spellLevel, null));
+
+
     }
 
     @Override

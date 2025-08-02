@@ -102,6 +102,10 @@ dependencies {
 
     implementation fg.deobf("io.redspace.ironsspellbooks:irons_spellbooks:${irons_spells_version}")
 
+    // Dummmy **********************************************************************************
+    //runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:6826548")
+    //runtimeOnly fg.deobf("curse.maven:selene-499980:6837820")
+
 
     // ALEXS CAVES ************************************************************************************************
     compileOnly fg.deobf("curse.maven:alexs-caves-924854:5121949")
@@ -139,10 +143,8 @@ dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
 
     // BETTER COMBAT **********************************************************************************************
-    //implementation fg.deobf('maven.modrinth:better-combat:1.8.6-forge')
-
-    //api fg.deobf("me.shedaniel.cloth:cloth-config-forge:11.1.136")
-    //api fg.deobf("dev.architectury:architectury-forge:11.0.5")
+    runtimeOnly fg.deobf("curse.maven:bettercombat-639842:5266134")
+    runtimeOnly fg.deobf("curse.maven:cloth-config-348521:4973441")
 
     // PATCHOULI **************************************************************************************************
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")

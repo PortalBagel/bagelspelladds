@@ -1,16 +1,8 @@
 package io.redspace.bagels_spell;
 
 import com.mojang.logging.LogUtils;
-import io.redspace.bagels_spell.registry.ExampleMobEffectRegistry;
-import io.redspace.bagels_spell.registry.ItemRegistry;
-import io.redspace.bagels_spell.registry.ExampleSpellRegistry;
-import io.redspace.ironsspellbooks.IronsSpellbooks;
-import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
+import io.redspace.bagels_spell.registry.*;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
-import io.redspace.ironsspellbooks.spells.fire.BlazeStormSpell;
-import io.redspace.ironsspellbooks.spells.holy.HealSpell;
-import net.minecraft.client.particle.HeartParticle;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,11 +27,14 @@ public  class BagelsSpell{
     public BagelsSpell() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
-        ExampleSpellRegistry.register(modEventBus);
-        ItemRegistry.register(modEventBus);
+        PbSpellRegistry.register(modEventBus);
+        PbEntityRegistry.register(modEventBus);
+        PbItemRegistry.register(modEventBus);
+        PbAttributeRegistry.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
+        PbSchoolRegistry.register(modEventBus);
         //ExampleMobEffectRegistry.MOB_EFFECT_DEFERRED_REGISTER.register(modEventBus);
-        ExampleMobEffectRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
+        PbMobEffectRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
