@@ -38,7 +38,9 @@ public class FlowerSurroundSpell extends AbstractSpell {
     private final ResourceLocation spellId = new ResourceLocation(BagelsSpell.MODID, "flower_surround");
     private final DefaultConfig defaultConfig = new DefaultConfig()
             .setMinRarity(SpellRarity.UNCOMMON)
-            .setSchoolResource(PbSchoolRegistry.BLOSSOM_RESOURCE)
+            //.setSchoolResource(PbSchoolRegistry.BLOSSOM_RESOURCE)
+            .setSchoolResource(SchoolRegistry.NATURE_RESOURCE)
+
             .setMaxLevel(10)
             .setCooldownSeconds(30)
             .build();

@@ -31,9 +31,10 @@
   "spell.bagels_spell.thousand_blossom": "Plum Blossom Sword Form: Scattering Blossom Strike",
   "spell.bagels_spell.thousand_blossom.guide": "Scatter a storm of razor sharp petals, dealing damage.",
 
-
-
-
+  "attribute.bagels_spell.blossom_magic_resist": "Blossom Magic Resist",
+  "attribute.bagels_spell.blossom_spell_power": "Blossom Spell Power",
+  "item.cataclysm_spellbooks.blossom_rune": "Blossom Rune",
+  "school.bagels_spell.blossom": "Blossom",
 
   "spell.bagels_spell.six_word_mantra": "Six Word Mantra",
   "spell.bagels_spell.six_word_mantra.guide": "Chant a mantra, with each extra recast granting a stronger buff."

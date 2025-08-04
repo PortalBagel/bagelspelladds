@@ -1,13 +1,8 @@
 package io.redspace.bagels_spell.registry;
 
 import io.redspace.bagels_spell.BagelsSpell;
-import io.redspace.ironsspellbooks.IronsSpellbooks;
-import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
-import io.redspace.ironsspellbooks.damage.ISSDamageTypes;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
-import io.redspace.ironsspellbooks.util.ModTags;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -21,7 +16,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
-import net.portalbagel.bagels_spell.util.PbTags;
+import io.redspace.bagels_spell.util.PbTags;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;

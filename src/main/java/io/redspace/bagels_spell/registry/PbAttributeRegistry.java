@@ -26,20 +26,18 @@ public class PbAttributeRegistry {
     }
 
 
-    //public static final RegistryObject<Attribute> WIND_MAGIC_RESIST = newResistanceAttribute("wind");
 
-    //public static final RegistryObject<Attribute> WIND_SPELL_POWER = newPowerAttribute("wind");
     private static RegistryObject<Attribute> registerResistanceAttribute(String id)
     {
         return ATTRIBUTES.register(id + "_magic_resist", () ->
-                (new MagicRangedAttribute("attribute.cataclysm_spellbooks." + id + "_magic_resist",
+                (new MagicRangedAttribute("attribute.bagels_spell." + id + "_magic_resist",
                         1.0D, 0, 10).setSyncable(true)));
     }
 
     private static RegistryObject<Attribute> registerPowerAttribute(String id)
     {
         return ATTRIBUTES.register(id + "_spell_power", () ->
-                (new MagicRangedAttribute("attribute.cataclysm_spellbooks." + id + "_spell_power",
+                (new MagicRangedAttribute("attribute.bagels_spell." + id + "_spell_power",
                         1.0D, 0, 10).setSyncable(true)));
     }
 

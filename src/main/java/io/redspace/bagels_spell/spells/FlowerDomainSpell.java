@@ -81,6 +81,7 @@ public class FlowerDomainSpell extends AbstractSpell {
     private final DefaultConfig defaultConfig = new DefaultConfig()
             .setMinRarity(SpellRarity.LEGENDARY)
             .setSchoolResource(PbSchoolRegistry.BLOSSOM_RESOURCE)
+            //.setSchoolResource(SchoolRegistry.NATURE_RESOURCE)
             .setMaxLevel(1)
             .setCooldownSeconds(120)
             .build();

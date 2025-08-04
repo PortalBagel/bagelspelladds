@@ -9,12 +9,20 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+//import net.portalbagel.bagels_spell.events.ServerEvents;
+
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+import com.mojang.logging.LogUtils;
+import io.redspace.ironsspellbooks.item.SpellBook;
+import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
+
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(BagelsSpell.MODID)
@@ -26,15 +34,31 @@ public  class BagelsSpell{
 
     public BagelsSpell() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.addListener(this::commonSetup);
-        PbSpellRegistry.register(modEventBus);
-        PbEntityRegistry.register(modEventBus);
+
+        // Event Handlers
+        //MinecraftForge.EVENT_BUS.register(new ServerEvents());
+        // Items
         PbItemRegistry.register(modEventBus);
-        PbAttributeRegistry.register(modEventBus);
-        MinecraftForge.EVENT_BUS.register(this);
+        // Loot Tables
+        //CSLootModifiers.register(modEventBus);
+        // Schools
         PbSchoolRegistry.register(modEventBus);
+        // Attributes
+        PbAttributeRegistry.register(modEventBus);
+        // Effects
+        //CSPotionEffectRegistry.register(modEventBus);
+        // Entities
+        PbEntityRegistry.register(modEventBus);
+        // Spells
+        PbSpellRegistry.register(modEventBus);
+        // Particles
+        //CSParticleRegistry.register(modEventBus);
+
+        //ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, PbConfig.SPEC, "bagels_spell_config.toml");
+
+        modEventBus.addListener(this::commonSetup);
+        MinecraftForge.EVENT_BUS.register(this);
         //ExampleMobEffectRegistry.MOB_EFFECT_DEFERRED_REGISTER.register(modEventBus);
-        PbMobEffectRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

@@ -1,4 +1,4 @@
-package io.redspace.bagels_spell.setup;
+package io.redspace.bagels_spell.events;
 
 import io.redspace.bagels_spell.BagelsSpell;
 import io.redspace.bagels_spell.entity.flower_slash.FlowerSlashRenderer;

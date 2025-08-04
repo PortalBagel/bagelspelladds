@@ -1,4 +1,4 @@
-package net.portalbagel.bagels_spell.util;
+package io.redspace.bagels_spell.util;
 
 import io.redspace.bagels_spell.BagelsSpell;
 import net.minecraft.resources.ResourceLocation;
