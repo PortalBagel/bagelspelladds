@@ -34,8 +34,7 @@ public class FlowerEvadeSpell extends AbstractSpell {
     private final ResourceLocation spellId = new ResourceLocation(BagelsSpell.MODID, "flower_evade");
     private final DefaultConfig defaultConfig = new DefaultConfig()
             .setMinRarity(SpellRarity.UNCOMMON)
-            //.setSchoolResource(PbSchoolRegistry.BLOSSOM_RESOURCE)
-            .setSchoolResource(SchoolRegistry.NATURE_RESOURCE)
+            .setSchoolResource(PbSchoolRegistry.BLOSSOM_RESOURCE)
 
             .setMaxLevel(5)
             .setCooldownSeconds(10)

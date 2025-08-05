@@ -4,6 +4,8 @@ import io.redspace.bagels_spell.BagelsSpell;
 import io.redspace.bagels_spell.items.ExampleMagicSword;
 import io.redspace.bagels_spell.items.SwordDustless;
 import io.redspace.bagels_spell.items.SwordFiregod;
+import io.redspace.bagels_spell.items.SwordHua;
+
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellDataRegistryHolder;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
@@ -30,7 +32,7 @@ public class PbItemRegistry {
     public static final RegistryObject<Item> EXAMPLE_MAGIC_SWORD = ITEMS.register("example_magic_sword", () -> new ExampleMagicSword(new SpellDataRegistryHolder[]{new SpellDataRegistryHolder(PbSpellRegistry.FLOWER_SLASH_SPELL, 1)}));
     public static final RegistryObject<Item> SWORD_DUSTLESS = ITEMS.register("sword_dustless",
             () -> new SwordDustless(new SpellDataRegistryHolder[]{
-                    new SpellDataRegistryHolder(PbSpellRegistry.FLOWER_STEP_SPELL, 5),
+                    new SpellDataRegistryHolder(SpellRegistry.OAKSKIN_SPELL, 10),
                     new SpellDataRegistryHolder(PbSpellRegistry.FLOWER_DOMAIN_SPELL, 1)
             }));
 
@@ -38,6 +40,12 @@ public class PbItemRegistry {
             () -> new SwordFiregod(new SpellDataRegistryHolder[]{
                     new SpellDataRegistryHolder(SpellRegistry.FLAMING_STRIKE_SPELL, 10),
                     new SpellDataRegistryHolder(SpellRegistry.HEAT_SURGE_SPELL, 10)
+            }));;
+
+    public static final RegistryObject<Item> SWORD_HUA = ITEMS.register("sword_plumblossom",
+            () -> new SwordHua(new SpellDataRegistryHolder[]{
+                    new SpellDataRegistryHolder(PbSpellRegistry.FLOWER_SLASH_SPELL, 10),
+                    new SpellDataRegistryHolder(PbSpellRegistry.FLOWER_SURROUND_SPELL, 10)
             }));;
 }
 

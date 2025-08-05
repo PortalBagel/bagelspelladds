@@ -1,6 +1,8 @@
 {
   "replace": false,
     "values": [
-    "bagels_spell:sword_dustless"
+      "bagels_spell:sword_dustless",
+      "bagels_spell:sword_firegod",
+      "bagels_spell:sword_hua"
   ]
 }

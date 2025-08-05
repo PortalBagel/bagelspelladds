@@ -59,8 +59,7 @@ public class FlowerStepSpell extends AbstractSpell {
 
     private final DefaultConfig defaultConfig = new DefaultConfig()
             .setMinRarity(SpellRarity.UNCOMMON)
-            //.setSchoolResource(PbSchoolRegistry.BLOSSOM_RESOURCE)
-            .setSchoolResource(SchoolRegistry.NATURE_RESOURCE)
+            .setSchoolResource(PbSchoolRegistry.BLOSSOM_RESOURCE)
 
             .setMaxLevel(5)
             .setCooldownSeconds(5)

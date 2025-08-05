@@ -13,7 +13,7 @@
 
   "item.bagels_spell.sword_dustless": "Dustless",
 
-
+  "item.bagels_spell.sword_plumblossom": "Plum Blossom Jian",
 
 
   "spell.bagels_spell.flower_domain": "Plum Blossom Sword Form: Beautiful Day",
@@ -30,6 +30,9 @@
 
   "spell.bagels_spell.thousand_blossom": "Plum Blossom Sword Form: Scattering Blossom Strike",
   "spell.bagels_spell.thousand_blossom.guide": "Scatter a storm of razor sharp petals, dealing damage.",
+
+  "spell.bagels_spell.flower_evade": "Plum Blossom Sword Form: Spring's Last Bloom",
+  "spell.bagels_spell.flower_evade.guide": "Retreat backwards, scattering petals that cut like steel.",
 
   "attribute.bagels_spell.blossom_magic_resist": "Blossom Magic Resist",
   "attribute.bagels_spell.blossom_spell_power": "Blossom Spell Power",

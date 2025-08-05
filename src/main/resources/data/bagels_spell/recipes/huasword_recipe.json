@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  N",
+    "PN ",
+    "#P "
+  ],
+  "key": {
+    "#": {
+      "item": "irons_spellbooks:weapon_parts"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "P": {
+      "item": "minecraft:pink_petals"
+    }
+  },
+  "result": {
+    "item": "bagels_spell:sword_plumblossom",
+    "count": 1
+  }
+}
